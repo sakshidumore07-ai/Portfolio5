@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sakshi Dumore — Data Scientist | Portfolio</title>
+  <meta name="description" content="Sakshi Dumore — Data Scientist portfolio showcasing projects, skills and contact details."/>
+  <style>
+    /* ---------- Reset & base ---------- */
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #9aa6b2;
+      --accent: #7dd3fc;
+      --accent-2: #60a5fa;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --glass-3: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.06);
+      --success: #34d399;
+      font-synthesis: none;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(96,165,250,0.06), transparent 8%),
+                  radial-gradient(800px 400px at 90% 90%, rgba(125,211,252,0.04), transparent 10%),
+                  var(--bg);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:36px;
+    }
+
+    /* ---------- Layout ---------- */
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+    }
+    header{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      margin-bottom:28px;
+    }
+    .profile{
+      width:120px;
+      height:120px;
+      border-radius:16px;
+      overflow:hidden;
+      flex-shrink:0;
+      border: 1px solid var(--glass-border);
+      background: linear-gradient(180deg, var(--glass-2), transparent);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      transform: translateY(0);
+      transition: transform .45s cubic-bezier(.2,.9,.3,1);
+    }
+    .profile img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .profile:hover{ transform: translateY(-6px) scale(1.02) }
+
+    .intro{
+      flex:1;
+    }
+    .intro h1{
+      font-size:1.6rem;
+      margin-bottom:6px;
+      letter-spacing:0.2px;
+    }
+    .intro p.title{
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:600;
+      font-size:0.95rem;
+    }
+    .contact-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .chip{
+      background:var(--glass);
+      border:1px solid var(--glass-border);
+      padding:8px 12px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:0.9rem;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      text-decoration:none;
+    }
+    .chip svg{ width:14px;height:14px;opacity:0.95 }
+
+    /* ---------- Main Grid ---------- */
+    main{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:start;
+    }
+
+    /* Left (projects & about) */
+    .section{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid var(--glass-border);
+      border-radius:14px;
+      padding:18px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      overflow:hidden;
+    }
+    h2{
+      font-size:1.05rem;
+      margin-bottom:10px;
+    }
+    .projects{
+      display:grid;
+      gap:14px;
+    }
+    .card{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:10px;
+      background: linear-gradient(180deg,var(--glass-3),transparent);
+      border:1px solid rgba(255,255,255,0.03);
+      transform: translateY(10px);
+      opacity:0;
+      transition: transform .5s cubic-bezier(.2,.9,.3,1), opacity .5s;
+    }
+    .card.revealed{ transform:none; opacity:1; }
+
+    .card .meta{
+      flex:1;
+    }
+    .card .meta h3{ margin-bottom:6px; font-size:1rem }
+    .card .meta p{ color:var(--muted); font-size:0.92rem; margin-bottom:8px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{ font-size:0.8rem; color:var(--muted); background:rgba(255,255,255,0.02); padding:6px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02)}
+
+    .card .actions{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:flex-end;
+      min-width:150px;
+    }
+    .btn{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      padding:9px 12px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.92rem;
+      border:1px solid transparent;
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .15s;
+    }
+    .btn:active{ transform: translateY(1px) }
+    .btn.secondary{
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.04);
+      padding:8px 10px;
+    }
+    .btn.primary{
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#04263b;
+      box-shadow: 0 8px 20px rgba(96,165,250,0.12), 0 2px 6px rgba(2,6,23,0.6);
+      border: none;
+      padding:10px 14px;
+      transform: translateY(0);
+    }
+    .btn.primary:hover{ transform: translateY(-3px) }
+
+    /* Right column (about/contact/skills) */
+    .right-col{
+      position:sticky;
+      top:28px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .info-list{ display:flex; flex-direction:column; gap:8px }
+    .info-item{ display:flex; gap:10px; align-items:center; color:var(--muted); font-size:0.95rem }
+    .info-item strong{ color: #e6eef6; width:110px; display:inline-block; font-weight:600 }
+    .skill-grid{ display:flex; gap:8px; flex-wrap:wrap }
+    .skill-pill{ background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:8px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); color:var(--muted); font-size:0.88rem }
+
+    /* Resume download */
+    .resume-cta{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:6px;
+    }
+    .download{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      padding:8px 12px;
+      border-radius:10px;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    /* Footer */
+    footer{
+      margin-top:26px;
+      text-align:center;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      main{ grid-template-columns: 1fr; }
+      .right-col{ position:relative; top:auto; }
+    }
+
+    /* subtle animated background shapes */
+    .bg-shape{
+      position:fixed;
+      width:380px;
+      height:380px;
+      border-radius:28%;
+      filter: blur(60px);
+      opacity:0.08;
+      z-index:0;
+      pointer-events:none;
+      mix-blend-mode: screen;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .shape-a{ background: linear-gradient(135deg,#7dd3fc,#60a5fa); left:-40px; top:-80px; transform:rotate(12deg) }
+    .shape-b{ background: linear-gradient(135deg,#a78bfa,#7c3aed); right:-40px; bottom:-100px; transform:rotate(-10deg); animation-duration:12s }
+
+    @keyframes floaty{
+      0%{ transform: translateY(0) rotate(0deg) }
+      50%{ transform: translateY(-18px) rotate(6deg) }
+      100%{ transform: translateY(0) rotate(0deg) }
+    }
+
+    /* small helper */
+    .muted{ color:var(--muted) }
+  </style>
+</head>
+<body>
+  <div class="bg-shape shape-a" aria-hidden="true"></div>
+  <div class="bg-shape shape-b" aria-hidden="true"></div>
+
+  <div class="container" role="main">
+    <header>
+      <div class="profile" title="Sakshi Dumore — profile image">
+        <!-- PROFILE IMAGE: make sure your hosting maps 'profile_pic__jpg' correctly to the actual image -->
+        <img src="/mnt/data/profile_pic__jpg" alt="Sakshi Dumore — profile photo" />
+      </div>
+
+      <div class="intro">
+        <h1>Sakshi Bhaskar Dumore</h1>
+        <p class="title">Data Scientist — Entry-level / Fresher</p>
+        <div class="contact-row" aria-label="contact links">
+          <a class="chip" href="https://www.linkedin.com/in/sakshi-dumore-a7a951365" target="_blank" rel="noopener">
+            <!-- LinkedIn icon (inline SVG) -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5zM2.25 21h5.46V8.95H2.25V21zM9.75 21h5.24v-6.35c0-3.06 3.97-3.31 3.97 0V21h5.24v-7.76c0-6.36-6.91-6.12-9.23-2.99V8.96H9.75V21z" fill="currentColor"/></svg>
+            LinkedIn
+          </a>
+
+          <a class="chip" href="https://github.com/sakshidumore07-ai" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.483 2 12.017c0 4.43 2.865 8.188 6.839 9.508.5.09.682-.217.682-.483 0-.237-.009-.866-.014-1.699-2.782.605-3.369-1.34-3.369-1.34-.454-1.155-1.11-1.464-1.11-1.464-.908-.622.069-.61.069-.61 1.004.072 1.532 1.032 1.532 1.032.892 1.528 2.341 1.087 2.91.832.091-.647.349-1.087.635-1.337-2.22-.253-4.555-1.112-4.555-4.947 0-1.092.39-1.986 1.03-2.685-.103-.253-.447-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.338 1.908-1.294 2.747-1.025 2.747-1.025.547 1.378.202 2.395.1 2.648.642.699 1.03 1.593 1.03 2.685 0 3.845-2.337 4.69-4.566 4.938.359.31.678.92.678 1.855 0 1.335-.012 2.414-.012 2.743 0 .27.18.578.688.48C19.137 20.2 22 16.444 22 12.018 22 6.483 17.523 2 12 2z" fill="currentColor"/></svg>
+            GitHub
+          </a>
+
+          <a class="chip" href="mailto:sakshidumore07@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M2 6.75A2.75 2.75 0 0 1 4.75 4h14.5A2.75 2.75 0 0 1 22 6.75v10.5A2.75 2.75 0 0 1 19.25 20H4.75A2.75 2.75 0 0 1 2 17.25V6.75zM4 7.5l8 5 8-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Email
+          </a>
+
+          <a class="chip" href="tel:+917020615130">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.09 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.97.37 1.92.73 2.82a2 2 0 0 1-.45 2.11L8.91 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.36 1.85.61 2.82.73A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            +91 70206 15130
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT: Projects -->
+      <div>
+        <section class="section" aria-labelledby="projects">
+          <h2 id="projects">Selected projects</h2>
+          <p class="muted" style="margin-bottom:12px">Interactive demos • Source code • Built with Flask & ML</p>
+
+          <div class="projects" id="projectsGrid">
+            <!-- Card 1 -->
+            <article class="card" data-reveal>
+              <div class="meta">
+                <h3>House Price Prediction</h3>
+                <p class="muted">Linear Regression model predicting house price from area, bedrooms, bathrooms, age, distance from city center. Flask + HTML frontend.</p>
+                <div class="tags" aria-hidden="true">
+                  <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Linear Regression</span><span class="tag">Pandas</span>
+                </div>
+              </div>
+
+              <div class="actions">
+                <a class="btn secondary" href="https://github.com/sakshidumore07-ai/HousePricePrediction" target="_blank" rel="noopener">Source Code</a>
+                <a class="btn primary" href="https://sakshibhaskardumore.pythonanywhere.com/" target="_blank" rel="noopener">Live Demo</a>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card" data-reveal>
+              <div class="meta">
+                <h3>Diabetes Predictor</h3>
+                <p class="muted">DecisionTreeClassifier-based prediction to detect diabetes risk from demographics and medical measures. Flask front-end demo available.</p>
+                <div class="tags">
+                  <span class="tag">Python</span><span class="tag">Decision Tree</span><span class="tag">Flask</span><span class="tag">Pandas</span>
+                </div>
+              </div>
+
+              <div class="actions">
+                <a class="btn secondary" href="https://github.com/sakshidumore07-ai/Diabetesproject" target="_blank" rel="noopener">Source Code</a>
+                <a class="btn primary" href="https://kalpanadumore.pythonanywhere.com/" target="_blank" rel="noopener">Live Demo</a>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="card" data-reveal>
+              <div class="meta">
+                <h3>GenAI Gift Recommender</h3>
+                <p class="muted">A Gemini AI powered gift recommender. Generates gift ideas based on relation, age, budget and occasion. Flask + HTML UI.</p>
+                <div class="tags">
+                  <span class="tag">GenAI</span><span class="tag">Flask</span><span class="tag">Frontend</span>
+                </div>
+              </div>
+
+              <div class="actions">
+                <a class="btn secondary" href="https://github.com/sakshidumore07-ai/GiftRecommender" target="_blank" rel="noopener">Source Code</a>
+                <a class="btn primary" href="https://bhaskardumore.pythonanywhere.com/" target="_blank" rel="noopener">Live Demo</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- About / Objective -->
+        <section class="section" style="margin-top:18px" aria-labelledby="about">
+          <h2 id="about">About / Objective</h2>
+          <p class="muted" style="margin-bottom:10px">Seeking an entry-level position in the IT industry where I can utilize my technical skills and problem-solving abilities. Eager to learn and contribute in a fast-paced environment.</p>
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+            <div style="flex:1;min-width:220px">
+              <h3 style="font-size:0.95rem;margin-bottom:8px">Education</h3>
+              <div class="muted">
+                <strong>MSc (Mathematics)</strong><br/>Neelkanthrao Shinde Science College — Gondwana University (2021–2022) • CGPA 7.25<br/><br/>
+                <strong>BSc</strong><br/>Lokmanya Tilak Mahavidyalaya — Sant Gadge Baba Amaravati University (2018–2020) • 66.96%
+              </div>
+            </div>
+
+            <div style="flex:1;min-width:220px">
+              <h3 style="font-size:0.95rem;margin-bottom:8px">Certs & Learning</h3>
+              <div class="muted">
+                Pursuing Data Science from CJC by Kunal Sir, Pune (Apr 8, 2025 – Sep 30, 2025).
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT: contact / skills -->
+      <aside class="right-col">
+        <div class="section" aria-labelledby="contact">
+          <h2 id="contact">Contact & Resume</h2>
+          <div class="info-list" style="margin-top:8px">
+            <div class="info-item"><strong>Phone</strong> +91 70206 15130</div>
+            <div class="info-item"><strong>Email</strong> <a href="mailto:sakshidumore07@gmail.com" class="muted">sakshidumore07@gmail.com</a></div>
+            <div class="info-item"><strong>LinkedIn</strong> <a href="https://www.linkedin.com/in/sakshi-dumore-a7a951365" target="_blank" rel="noopener" class="muted">/sakshi-dumore-a7a951365</a></div>
+          </div>
+
+          <div class="resume-cta" style="margin-top:12px">
+            <a class="download" href="/mnt/data/Sakshi_dumore_datascientist LATEST.pdf" target="_blank" rel="noopener">Download Resume (PDF)</a>
+            <a class="btn primary" href="mailto:sakshidumore07@gmail.com?subject=Opportunity%20for%20Sakshi%20Dumore" style="padding:8px 12px">Contact Me</a>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="skills">
+          <h2 id="skills">Technical Skills</h2>
+          <div style="margin-top:10px" class="skill-grid" aria-hidden="true">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">R</span>
+            <span class="skill-pill">SQL / MySQL</span>
+            <span class="skill-pill">Pandas</span>
+            <span class="skill-pill">NumPy</span>
+            <span class="skill-pill">Matplotlib</span>
+            <span class="skill-pill">Excel</span>
+            <span class="skill-pill">Jupyter</span>
+            <span class="skill-pill">Prompt Engineering</span>
+            <span class="skill-pill">Flask</span>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="language">
+          <h2 id="language">Languages</h2>
+          <div class="muted" style="margin-top:8px">English • Hindi • Marathi</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>Made with care • Sakshi Dumore • Data Scientist</div>
+    </footer>
+  </div>
+
+  <script>
+    // Reveal-on-scroll for cards
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          o.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12});
+
+    document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
+
+    // Simple keyboard accessibility: allow Enter on live demo buttons
+    document.querySelectorAll('.btn.primary').forEach(btn=>{
+      btn.setAttribute('role','link');
+      btn.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' ') { window.open(btn.href, '_blank'); }
+      });
+    });
+
+    // Improve link highlighting for "Live Demo" (pulse)
+    const liveBtns = document.querySelectorAll('.btn.primary');
+    liveBtns.forEach(b => {
+      b.style.boxShadow = "0 8px 30px rgba(96,165,250,0.12)";
+    });
+  </script>
+</body>
+</html>
